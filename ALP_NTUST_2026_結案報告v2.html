@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALP · 2026 台科大校園徵才 · 結案報告</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --y:#FAF054;--k:#000;--w:#fff;
+    --g2:#222;--g3:#555;--g4:#888;--g5:#ddd;--g6:#f2f2f2;--g7:#f8f8f8;
+    --green:#1a7a4a;--red:#c0392b;--blue:#1a5fd4;
+  }
+  body{font-family:'Noto Sans TC','Outfit',sans-serif;background:#f5f5f5;color:var(--k);}
+
+  /* TOPBAR */
+  .topbar{background:var(--k);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .logo{font-family:'Outfit',sans-serif;font-weight:900;font-size:20px;letter-spacing:5px;color:var(--w);}
+  .logo em{color:var(--y);font-style:normal;}
+  .doc-tag{background:var(--y);color:var(--k);font-size:11px;font-weight:700;padding:4px 14px;letter-spacing:1px;}
+
+  /* HERO */
+  .hero{background:var(--k);padding:56px 40px 52px;border-bottom:6px solid var(--y);}
+  .hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;color:#666;margin-bottom:16px;text-transform:uppercase;}
+  .hero-title{font-family:'Outfit',sans-serif;font-weight:900;font-size:clamp(30px,5vw,54px);line-height:1.05;color:var(--w);margin-bottom:12px;}
+  .hero-title span{color:var(--y);}
+  .hero-sub{font-size:13px;color:#777;margin-bottom:28px;}
+  .hero-stats{display:flex;flex-wrap:wrap;gap:0;border:1px solid #222;}
+  .hs{flex:1;min-width:120px;padding:18px 22px;border-right:1px solid #222;}
+  .hs:last-child{border-right:none;}
+  .hs label{font-size:9px;font-weight:700;letter-spacing:2px;color:#666;display:block;margin-bottom:6px;text-transform:uppercase;}
+  .hs strong{font-family:'Outfit',sans-serif;font-weight:900;font-size:26px;color:var(--w);display:block;line-height:1;}
+  .hs small{font-size:10px;color:#666;margin-top:4px;display:block;}
+
+  /* LAYOUT */
+  .container{max-width:1100px;margin:0 auto;padding:40px 20px;}
+  .section{background:var(--w);margin-bottom:24px;overflow:hidden;}
+  .sec-hd{background:var(--k);padding:14px 28px;display:flex;align-items:center;gap:12px;}
+  .sec-n{background:var(--y);color:var(--k);font-family:'Outfit',sans-serif;font-weight:900;font-size:11px;padding:3px 9px;letter-spacing:1px;}
+  .sec-t{font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;letter-spacing:2px;color:var(--w);}
+  .sec-body{padding:28px;}
+
+  /* KPI CARDS */
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--g5);}
+  .kpi{background:var(--w);padding:22px 20px 26px;border-top:4px solid var(--y);}
+  .kpi.green{border-top-color:var(--green);}
+  .kpi.blue{border-top-color:var(--blue);}
+  .kpi.red{border-top-color:var(--red);}
+  .kpi-num{font-family:'Outfit',sans-serif;font-weight:900;font-size:42px;line-height:1;color:var(--k);}
+  .kpi-unit{font-size:14px;color:var(--g4);font-weight:400;}
+  .kpi-label{font-size:12px;color:var(--g3);margin-top:6px;}
+  .kpi-note{font-size:10px;color:var(--g4);margin-top:4px;}
+
+  /* CHART BARS */
+  .chart-wrap{margin-top:4px;}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .bar-label{font-size:12px;color:var(--g2);min-width:130px;text-align:right;flex-shrink:0;}
+  .bar-track{flex:1;background:var(--g6);height:28px;position:relative;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--k);display:flex;align-items:center;padding-left:10px;transition:width .6s;}
+  .bar-fill.y{background:var(--y);}
+  .bar-fill.blue{background:var(--blue);}
+  .bar-fill.green{background:var(--green);}
+  .bar-val{font-family:'Outfit',sans-serif;font-weight:700;font-size:12px;color:var(--w);white-space:nowrap;}
+  .bar-val.dark{color:var(--k);}
+  .bar-pct{font-size:11px;color:var(--g4);min-width:40px;}
+
+  /* DONUT-STYLE STAT */
+  .duo-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--g5);}
+  .duo-item{background:var(--w);padding:22px 24px;}
+  .duo-big{font-family:'Outfit',sans-serif;font-weight:900;font-size:48px;color:var(--k);line-height:1;}
+  .duo-big.hi{color:var(--green);}
+  .duo-big.lo{color:var(--red);}
+  .duo-label{font-size:12px;color:var(--g3);margin-top:6px;}
+  .duo-sub{font-size:11px;color:var(--g4);margin-top:2px;}
+
+  /* TIMELINE (hourly) */
+  .hour-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--g5);}
+  .hour-item{background:var(--w);padding:14px 12px 16px;text-align:center;}
+  .hour-t{font-family:'Outfit',sans-serif;font-weight:700;font-size:12px;color:var(--k);margin-bottom:8px;}
+  .hour-bar-wrap{height:60px;display:flex;align-items:flex-end;justify-content:center;}
+  .hour-bar{width:32px;background:var(--k);min-height:4px;}
+  .hour-bar.peak{background:var(--y);}
+  .hour-n{font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;color:var(--k);margin-top:6px;}
+
+  /* INFO TABLE */
+  .info-table{width:100%;border-collapse:collapse;}
+  .info-table td{padding:10px 14px;font-size:12px;color:var(--g2);border-bottom:1px solid var(--g6);vertical-align:top;}
+  .info-table td:first-child{font-weight:700;color:var(--k);white-space:nowrap;width:35%;background:var(--g7);}
+  .info-table tr:last-child td{border-bottom:none;}
+
+  /* INSIGHT CARDS */
+  .insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;}
+  .insight{border-left:4px solid var(--y);padding:14px 16px;background:var(--g7);}
+  .insight.action{border-left-color:var(--blue);}
+  .insight-t{font-weight:700;font-size:13px;color:var(--k);margin-bottom:6px;}
+  .insight-body{font-size:12px;color:var(--g3);line-height:1.7;}
+  .insight-body b{color:var(--k);}
+
+  /* RESUME LIST */
+  .resume-list{list-style:none;padding:0;}
+  .resume-list li{font-size:12px;padding:8px 14px;border-bottom:1px solid var(--g6);display:flex;align-items:center;gap:8px;}
+  .resume-list li:last-child{border-bottom:none;}
+  .resume-list a{color:var(--blue);word-break:break-all;}
+  .rl-tag{background:var(--g6);font-size:10px;padding:2px 7px;color:var(--g3);white-space:nowrap;flex-shrink:0;}
+
+  /* TAG CHIPS */
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+  .chip{font-size:11px;padding:4px 10px;background:var(--g6);color:var(--g2);border:1px solid var(--g5);}
+  .chip.hot{background:var(--k);color:var(--y);border-color:var(--k);font-weight:700;}
+
+  /* FOOTER */
+  .footer{background:var(--k);padding:20px 40px;display:flex;justify-content:space-between;align-items:center;margin-top:40px;}
+  .footer-l{font-family:'Outfit',sans-serif;font-weight:900;font-size:11px;letter-spacing:3px;color:var(--y);}
+  .footer-r{font-size:11px;color:#555;text-align:right;line-height:1.7;}
+
+  .sublabel{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--g4);margin-bottom:12px;text-transform:uppercase;}
+  .divider{height:1px;background:var(--g5);margin:20px 0;}
+  .highlight-strip{background:var(--y);padding:12px 16px;font-size:13px;font-weight:700;color:var(--k);margin-bottom:20px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">ALP<em> ·</em></div>
+  <div class="doc-tag">2026 台科大校園徵才 · 結案報告</div>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Post-Event Report · Ally Logistic Property 永聯物流開發</div>
+  <div class="hero-title">2026 台科大<br><span>校園徵才博覽會</span><br>結案報告</div>
+  <div class="hero-sub">活動日期：2026/03/27（五）· 攤位 185 · A 區 · 國立臺灣科技大學</div>
+  <div class="hero-stats">
+    <div class="hs"><label>問卷回收</label><strong>82</strong><small>份（排除測試）</small></div>
+    <div class="hs"><label>活動時間</label><strong>6H</strong><small>10:00 – 16:00</small></div>
+    <div class="hs"><label>出席人員</label><strong>15</strong><small>跨 7 部門</small></div>
+    <div class="hs"><label>未來活動意願</label><strong>84%</strong><small>有意願再參加</small></div>
+    <div class="hs"><label>提供履歷連結</label><strong>6</strong><small>位主動提供</small></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 01 活動概覽 -->
+  <div class="section">
+    <div class="sec-hd"><div class="sec-n">01</div><div class="sec-t">活動概覽 · Event Overview</div></div>
+    <div class="sec-body">
+      <table class="info-table">
+        <tr><td>活動名稱</td><td>2026 國立臺灣科技大學校園徵才博覽會</td></tr>
+        <tr><td>日期</td><td>2026 年 3 月 27 日（五）</td></tr>
+        <tr><td>時間</td><td>10:00 – 16:00（場佈 09:00 起）</td></tr>
+        <tr><td>地點</td><td>國立臺灣科技大學 · 攤位 185 · A 區（研揚大樓旁）</td></tr>
+        <tr><td>出席部門</td><td>HR（Jeff、Tina、Jenny、Winny、Lewis、Daniel）、AXL（Deven、Cindy）、ASC（Shawn）、IT（Sandy）、BD（Anna）、OM（Allen）、TEL（Sean Chao、Charlies Kuo）</td></tr>
+        <tr><td>徵才職位</td><td>正職 8 個 · IT 實習 3 位 · 各部門實習生</td></tr>
+        <tr><td>天氣</td><td>早上降雨，下午轉晴</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 02 核心數據 -->
+  <div class="section">
+    <div class="sec-hd"><div class="sec-n">02</div><div class="sec-t">核心數據 · Key Metrics</div></div>
+    <div class="sec-body" style="padding:0;">
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-num">82<span class="kpi-unit"> 份</span></div>
+          <div class="kpi-label">問卷有效回收數</div>
+          <div class="kpi-note">排除 1 份內部測試問卷</div>
+        </div>
+        <div class="kpi green">
+          <div class="kpi-num">84<span class="kpi-unit">%</span></div>
+          <div class="kpi-label">有意願參加未來活動</div>
+          <div class="kpi-note">69 / 82 份</div>
+        </div>
+        <div class="kpi blue">
+          <div class="kpi-num">56<span class="kpi-unit">%</span></div>
+          <div class="kpi-label">來自台科大學生</div>
+          <div class="kpi-note">46 / 82 份</div>
+        </div>
+        <div class="kpi red">
+          <div class="kpi-num">62<span class="kpi-unit">%</span></div>
+          <div class="kpi-label">填卷前未聽過 ALP</div>
+          <div class="kpi-note">51 / 82 份 · 品牌曝光機會</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-num">55<span class="kpi-unit"> 位</span></div>
+          <div class="kpi-label">正在找實習的學生</div>
+          <div class="kpi-note">占比 67%</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-num">20<span class="kpi-unit"> 位</span></div>
+          <div class="kpi-label">應屆畢業生（找全職）</div>
+          <div class="kpi-note">占比 24%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 填卷者背景 -->
+  <div class="section">
+    <div class="sec-hd"><div class="sec-n">03</div><div class="sec-t">填卷者背景分析 · Respondent Profile</div></div>
+    <div class="sec-body">
+
+      <div class="sublabel">▎ 職涯狀態</div>
+      <div class="chart-wrap">
+        <div class="bar-row">
+          <div class="bar-label">找實習機會</div>
+          <div class="bar-track"><div class="bar-fill y" style="width:67%"><span class="bar-val dark">55 人 · 67%</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">應屆畢業生（找全職）</div>
+          <div class="bar-track"><div class="bar-fill" style="width:24%"><span class="bar-val">20 人 · 24%</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">待業中</div>
+          <div class="bar-track"><div class="bar-fill" style="width:6%;background:#888"><span class="bar-val">5 人</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">在職中</div>
+          <div class="bar-track"><div class="bar-fill" style="width:2%;background:#bbb"><span class="bar-val">2 人</span></div></div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="sublabel">▎ 填卷者學校分布</div>
+      <div class="chart-wrap">
+        <div class="bar-row">
+          <div class="bar-label">台灣科技大學</div>
+          <div class="bar-track"><div class="bar-fill y" style="width:56%"><span class="bar-val dark">46 人 · 56%</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">其他學校</div>
+          <div class="bar-track"><div class="bar-fill" style="width:32%"><span class="bar-val">26 人 · 32%</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">台灣大學</div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:10%"><span class="bar-val">8 人 · 10%</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">大同大學</div>
+          <div class="bar-track"><div class="bar-fill" style="width:2%;background:#aaa"><span class="bar-val">2 人</span></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 04 品牌認知 -->
+  <div class="section">
+    <div class="sec-hd"><div class="sec-n">04</div><div class="sec-t">品牌認知 · Brand Awareness</div></div>
+    <div class="sec-body" style="padding:0;">
+      <div class="duo-stats">
+        <div class="duo-item">
+          <div class="duo-big lo">62<span style="font-size:24px;">%</span></div>
+          <div class="duo-label">填卷前從未聽過 ALP</div>
+          <div class="duo-sub">51 / 82 份 · 品牌曝光效果顯著</div>
+        </div>
+        <div class="duo-item">
+          <div class="duo-big hi">38<span style="font-size:24px;">%</span></div>
+          <div class="duo-label">填卷前已知道 ALP</div>
+          <div class="duo-sub">31 / 82 份</div>
+        </div>
+      </div>
+      <div class="sec-body">
+        <div class="sublabel">▎ 得知 ALP 的渠道（複選）</div>
+        <div class="chart-wrap">
+          <div class="bar-row">
+            <div class="bar-label">實體徵才活動</div>
+            <div class="bar-track"><div class="bar-fill y" style="width:100%"><span class="bar-val dark">16 人 · 最多</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">求職網站（104等）</div>
+            <div class="bar-track"><div class="bar-fill" style="width:37%"><span class="bar-val">6 人</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">官方網站</div>
+            <div class="bar-track"><div class="bar-fill" style="width:25%"><span class="bar-val">4 人</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">社群媒體</div>
+            <div class="bar-track"><div class="bar-fill" style="width:12%"><span class="bar-val">2 人</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">親朋好友介紹</div>
+            <div class="bar-track"><div class="bar-fill" style="width:12%"><span class="bar-val">2 人</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">新聞 / 媒體</div>
+            <div class="bar-track"><div class="bar-fill" style="width:12%"><span class="bar-val">2 人</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">指導教授 / 學校</div>
+            <div class="bar-track"><div class="bar-fill" style="width:12%"><span class="bar-val">2 人</span></div></div>
+          </div>
+        </div>
+        <div class="highlight-strip" style="margin-top:16px;">
+          💡 超過六成填卷者在本次活動前從未聽過 ALP，代表校招活動對品牌認知擴散效果顯著。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 興趣領域 -->
+  <div class="section">
+    <div class="sec-hd"><div class="sec-n">05</div><div class="sec-t">興趣領域分析 · Areas of Interest</div></div>
+    <div class="sec-body">
+      <div class="sublabel">▎ 填卷者最感興趣的工作領域（複選）</div>
+      <div class="chart-wrap">
+        <div class="bar-row">
+          <div class="bar-label">物流科技</div>
+          <div class="bar-track"><div class="bar-fill y" style="width:100%"><span class="bar-val dark">45 人 · 最高</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">資訊科技</div>
+          <div class="bar-track"><div class="bar-fill" style="width:71%"><span class="bar-val">32 人</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">物流營運</div>
+          <div class="bar-track"><div class="bar-fill" style="width:51%"><span class="bar-val">23 人</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">建築工程</div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:38%"><span class="bar-val">17 人</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">商業發展</div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:36%"><span class="bar-val">16 人</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">品牌行銷</div>
+          <div class="bar-track"><div class="bar-fill" style="width:20%;background:#aaa"><span class="bar-val">9 人</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">行政總務</div>
+          <div class="bar-track"><div class="bar-fill" style="width:18%;background:#bbb"><span class="bar-val">8 人</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">人力資源</div>
+          <div class="bar-track"><div class="bar-fill" style="width:13%;background:#ccc"><span class="bar-val">6 人</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">地產開發</div>
+          <div class="bar-track"><div class="bar-fill" style="width:13%;background:#ccc"><span class="bar-val">6 人</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">財務會計</div>
+          <div class="bar-track"><div class="bar-fill" style="width:4%;background:#ddd"><span class="bar-val dark">2 人</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 填卷時段 -->
+  <div class="section">
+    <div class="sec-hd"><div class="sec-n">06</div><div class="sec-t">填卷時段分析 · Submission Timeline</div></div>
+    <div class="sec-body">
+      <div class="sublabel">▎ 各時段問卷回收數</div>
+      <div class="hour-grid">
+        <div class="hour-item">
+          <div class="hour-t">11:00</div>
+          <div class="hour-bar-wrap"><div class="hour-bar" style="height:24%"></div></div>
+          <div class="hour-n">9</div>
+        </div>
+        <div class="hour-item">
+          <div class="hour-t">12:00</div>
+          <div class="hour-bar-wrap"><div class="hour-bar" style="height:57%"></div></div>
+          <div class="hour-n">13</div>
+        </div>
+        <div class="hour-item">
+          <div class="hour-t">13:00</div>
+          <div class="hour-bar-wrap"><div class="hour-bar" style="height:78%"></div></div>
+          <div class="hour-n">18</div>
+        </div>
+        <div class="hour-item">
+          <div class="hour-t">14:00</div>
+          <div class="hour-bar-wrap"><div class="hour-bar peak" style="height:100%"></div></div>
+          <div class="hour-n" style="color:var(--k);font-weight:900;">23 🔥</div>
+        </div>
+        <div class="hour-item">
+          <div class="hour-t">15:00</div>
+          <div class="hour-bar-wrap"><div class="hour-bar" style="height:70%"></div></div>
+          <div class="hour-n">16</div>
+        </div>
+        <div class="hour-item">
+          <div class="hour-t">16:00+</div>
+          <div class="hour-bar-wrap"><div class="hour-bar" style="height:8%;background:#ccc"></div></div>
+          <div class="hour-n" style="color:var(--g4);">3</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--g4);">
+        ⏰ 活動高峰為 14:00 時段（23 份），下午整體流量明顯高於上午。
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 未來意願 -->
+  <div class="section">
+    <div class="sec-hd"><div class="sec-n">07</div><div class="sec-t">未來活動意願 · Future Engagement</div></div>
+    <div class="sec-body" style="padding:0;">
+      <div class="duo-stats">
+        <div class="duo-item">
+          <div class="duo-big hi">84<span style="font-size:24px;">%</span></div>
+          <div class="duo-label">有意願參加未來 ALP 主辦活動</div>
+          <div class="duo-sub">69 / 82 份</div>
+        </div>
+        <div class="duo-item">
+          <div class="duo-big lo">16<span style="font-size:24px;">%</span></div>
+          <div class="duo-label">無意願參加</div>
+          <div class="duo-sub">13 / 82 份</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 洞察 & 建議 -->
+  <div class="section">
+    <div class="sec-hd"><div class="sec-n">08</div><div class="sec-t">洞察與建議 · Insights & Recommendations</div></div>
+    <div class="sec-body">
+      <div class="highlight-strip">📊 本次活動品牌曝光效果良好，六成填卷者為首次接觸 ALP，且八成以上有意願持續互動，代表潛在人才庫基礎扎實。</div>
+
+      <div class="sublabel">▎ 關鍵洞察</div>
+      <div class="insight-grid">
+        <div class="insight">
+          <div class="insight-t">🎯 科技與 IT 人才需求高度吻合</div>
+          <div class="insight-body">物流科技（45人）與資訊科技（32人）合計占所有興趣的<b>前兩名</b>，與 ALP IT 實習職位高度對應，後續可加強這兩個職位的追蹤。</div>
+        </div>
+        <div class="insight">
+          <div class="insight-t">🏫 非台科大學生占 44%</div>
+          <div class="insight-body">雖然是台科大場次，仍有<b>36 位來自其他學校</b>，包含台大 8 位，顯示跨校曝光效益。未來可考慮在台大等校增加校招場次。</div>
+        </div>
+        <div class="insight">
+          <div class="insight-t">⏰ 下午為人流高峰</div>
+          <div class="insight-body">14:00 為單小時最高峰（23份），下午 13:00–15:00 合計佔全日 <b>70%</b>。建議未來將核心人力資源集中安排在下午時段。</div>
+        </div>
+        <div class="insight">
+          <div class="insight-t">📣 品牌認知仍有大幅提升空間</div>
+          <div class="insight-body">62% 填卷者此前未聽過 ALP，主要認識渠道仍以<b>實體活動為主</b>，社群媒體與求職網站的觸及率偏低，可加強數位渠道曝光。</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="sublabel">▎ 後續行動建議</div>
+      <div class="insight-grid">
+        <div class="insight action">
+          <div class="insight-t">📧 後續追蹤聯繫</div>
+          <div class="insight-body">針對提供履歷連結的 <b>6 位</b>以及紙本履歷的同學，於<b>一週內</b>完成初步聯繫，說明下一步流程。</div>
+        </div>
+        <div class="insight action">
+          <div class="insight-t">📱 數位渠道強化</div>
+          <div class="insight-body">加強 <b>104、LinkedIn、Instagram</b> 的職缺曝光，針對台科大及台大學生受眾設定精準廣告，擴大下一場招募前的品牌認知。</div>
+        </div>
+        <div class="insight action">
+          <div class="insight-t">🎓 規劃下一場校招</div>
+          <div class="insight-body">84% 有意願參加未來活動，建議規劃<b>僑生場（4/11）</b>及<b>104 校招博覽會（7/4）</b>，持續維持人才管道。</div>
+        </div>
+        <div class="insight action">
+          <div class="insight-t">📊 問卷資料建檔</div>
+          <div class="insight-body">將 82 份問卷資料導入 ATS / 人才資料庫，對有意願的同學建立後續追蹤標籤，作為長期人才庫。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-l">ALP · CHANGE FOR BETTER</div>
+  <div class="footer-r">HR Team · 2026/03/27 · 台科大校園徵才博覽會<br>www.alp.global · 統編 54642712</div>
+</div>
+
+</body>
+</html>
